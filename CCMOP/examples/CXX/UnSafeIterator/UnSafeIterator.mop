@@ -1,0 +1,24 @@
+
+#include<iostream>
+UnSafeIterator(std::string s, std::string::iterator it){
+     event create after(std::string s, std::string::iterator it):
+    (call(iterator string.begin())||call(iterator string.end()))
+	 &&result(it) && target(s) &&within(main()){}
+
+    event update after(std::string s) :
+    (call(% string.clear(...))
+   	||call(% string.insert(...))
+	||call(% string.erase(...))
+	||call(% string.push_back(...))
+	||call(% string.pop_back(...))
+	||call(% string.operator=(...))
+	||call(% string.operator+=(...))) && target(s) {}
+
+	event derefIterator before(std::string::iterator it):call(% operator*())&&args(it){}
+
+    ere : create derefIterator* update update* derefIterator
+
+        @match {
+		std::cout<<"improper iterator usage!"<<std::endl;
+        }
+}

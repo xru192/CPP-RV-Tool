@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+
+UAF(void* key){
+	event malloc after(void* key) :(call(%  malloc(...))||call(% calloc(...)))&& result(key){}
+
+    event free before(void* key):
+              call(% free(...)) && args(key){}
+     event deref before(void *key):derefPointer(){}
+
+	 ere : malloc  deref* free (malloc  deref* free )* deref
+
+        @ match {
+          printf("use after free at address %p!\n",key);
+          __RESET;
+        }
+}

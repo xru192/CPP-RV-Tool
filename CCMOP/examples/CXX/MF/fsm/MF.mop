@@ -1,0 +1,29 @@
+#include<iostream>
+using namespace std;
+MF(void *key){
+	event create after(void* key) :
+                               expr(new *(...))&& result(key){}
+    event free before(void* key) :
+                                   expr(delete *(...))&& args(key){}
+
+    event endProg before() : endProgram(){}
+
+
+   fsm :
+     start [
+        create -> unsafe
+     ]
+     unsafe [
+        free -> start
+        endProg -> leak
+     ]
+     leak [
+
+     ]
+     alias match = leak
+
+        @match {
+		cout<<"Not free for heap variable!"<<endl;
+        }
+}
+

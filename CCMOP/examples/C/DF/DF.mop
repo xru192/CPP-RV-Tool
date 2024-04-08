@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+
+DF(void* key){
+	event malloc after(void* key) :
+              call(% malloc(...)) && result(key){}
+
+    event free before(void* key):
+              call(% free(...)) && args(key){}
+
+
+ere: (malloc free)* malloc free free
+
+        @match {
+          printf("object double free at address %p\n",TARGET->key);
+        __RESET;
+        }
+}

@@ -1,0 +1,16 @@
+#include<iostream>
+MF(void *key){
+	event create after(void* key) :
+                               expr(new *(...))&& result(key){}
+    event free before(void* key) :
+                                   expr(delete *(...))&& args(key){}
+
+    event endProg before() : endProgram(){}
+
+    ere : (create  free)* create   endProg
+
+        @match {
+		std::cout<<"Not free for heap variable!"<<std::endl;
+        }
+}
+

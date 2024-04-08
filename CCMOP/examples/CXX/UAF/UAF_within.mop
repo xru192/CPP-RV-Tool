@@ -1,0 +1,18 @@
+
+#include<iostream>
+
+UAF(void *key){
+	event create after(void* key) :
+                               expr(new *(...))&& result(key) && within(rv::test()){}
+    event free before(void* key) :
+                                   expr(delete *(...))&& args(key) && within(rv::test()){}
+
+     event deref before(void *key):derefPointer() && within(rv::test()){}
+
+	ere : create   deref* free (create   deref* free )* deref
+
+        @ match {
+          std::cout<<"use after free at address "<<std::endl;
+          __RESET;
+        }
+}

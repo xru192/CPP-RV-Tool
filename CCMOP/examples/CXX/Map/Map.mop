@@ -1,0 +1,24 @@
+#include<iostream>
+#include<map>
+using namespace std;
+
+Map(std::map<int, std::string> map,std::map<int, std::string>::iterator it){
+    creation event create after(std::map<int,std::string> map):
+              expr(map(...))  && result(map){}
+
+    event createIter after(std::map<int,std::string> map, std::map<int,std::string>::iterator it) :
+                  (call(% map<int,std::string>.begin(...))
+                 ||call(% map<int,std::string>.end(...))) && target(map) &&result(it) {}
+     event update after(std::map<int,std::string> map) :
+                  (call(% map<int,std::string>.clear(...))
+                 ||call(% map<int,std::string>.insert(...))) && target(map) {}
+
+	event derefIterator before(std::map<int,std::string>::iterator it):call(% operator*())&&args(it){}
+
+    ere : create update* createIter derefIterator* update update* derefIterator
+
+        @match {
+		cout<<"improper iterator usage!"<<endl;
+        }
+}
+

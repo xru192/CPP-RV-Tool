@@ -1,0 +1,17 @@
+#include <stdio.h>
+MF(void* key){
+	event malloc after(void* key) :
+              call(% malloc(...))&& result(key){}
+
+    event free before(void* key):
+              call(% free(...)) && args(key){}
+
+    event endProg before() : endProgram(){}
+
+ere: (malloc   free)* malloc  endProg
+
+        @match {
+          printf("object not free at address %p\n",TARGET->key);
+
+        }
+}

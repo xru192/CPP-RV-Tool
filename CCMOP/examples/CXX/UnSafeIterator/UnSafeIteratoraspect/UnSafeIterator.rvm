@@ -1,0 +1,13 @@
+#include <iostream>
+UnSafeIterator(std::string s, std::string::iterator it) {
+	event create(std::string s, std::string::iterator it){}
+	event update(std::string s){}
+	event derefIterator(std::string::iterator it){}
+	ere:  create derefIterator* update update* derefIterator
+
+	@match
+	{
+		std::cout<<"improper iterator usage!"<<std::endl;
+	}
+
+}
