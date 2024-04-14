@@ -1,23 +1,6 @@
 #include <iostream>
-
-class Car
-{
-    public:
-    void drive() {}
-
-    void park() {}
-};
-
-class Person
-{
-    public:
-    void putOnSeatBelt() {}   // if not in car/already put on does nothing
-    void takeOffSeatBelt() {} // if not in car/already taken off does nothing
-
-    void enterCarAsDriver(Car c) {}
-    void enterCarAsPassenger(Car c) {}
-    void exitCar() {}
-};
+#include "Person.h"
+#include "Car.h"
 
 void scenario1()
 {
@@ -60,8 +43,15 @@ int main(int argc, char **argv)
     case 1:
         scenario1();
         break;
+    case 2:
+        scenario2();
+        break;
+    case 3:
+        scenario3();
+        break;
     default:
-        std::cout << "Invalid option" << std::endl;
+        std::cout << "Invalid option. Must be in 1-3" << std::endl;
     }
     return 0;
 }
+

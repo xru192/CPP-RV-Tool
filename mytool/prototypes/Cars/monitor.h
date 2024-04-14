@@ -1,5 +1,8 @@
+#ifndef MONITOR_H
+#define MONITOR_H
+
 #include<iostream>
-#include "main.cpp"
+#include "Car.h"
 
 
 #include <iostream>
@@ -20,3 +23,4 @@ __RVC_Spec1_drive(Car& c);
 int __RVC_state = 0; 
 };
 
+#endif

@@ -1,0 +1,23 @@
+#ifndef __ASPECT_AH__
+#define __ASPECT_AH__
+
+#include <iostream>
+#include "monitor.h"
+
+namespace monitor {
+    Spec1_Monitor monitor {};
+}
+
+aspect Weave {
+
+    advice execution("void ...::drive()") : after() {
+        std::cout << "Car driven" << std::endl;
+    }
+
+    advice execution("void Person::enterCarAsDriver(...)") : after() {
+        std::cout << "Person entered as driver" << std::endl;
+    }
+
+};
+
+#endif
