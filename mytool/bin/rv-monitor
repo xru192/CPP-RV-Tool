@@ -27,6 +27,5 @@ RELEASE="$SRC_ROOT/lib"
 PLUGINS_CLASSPATH="$RELEASE/plugins/*"
 
 # LOGICPLUGINPATH="$RELEASE/plugins/" java -cp "$RELEASE/*":$PLUGINS_CLASSPATH $MAINCLASS $@
-
 LOGICPLUGINPATH="$RELEASE/plugins/" /usr/lib/jvm/java-1.8.0-openjdk-amd64/bin/java -cp "$RELEASE/*":$PLUGINS_CLASSPATH $MAINCLASS $@
 
