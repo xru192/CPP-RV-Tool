@@ -13,3 +13,4 @@ instrument:
 clean:
 	rm -f __RVC*
 	rm -f *.out
+	rm -f *.gch
