@@ -1,5 +1,5 @@
-#include<iostream>
-#include "main.cpp"
+#include <iostream>
+#include "Car.h"
 
 Spec1(Car c) {
     event createCar after(Car c): {}
