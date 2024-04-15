@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 {
     if (argc < 2)
     {
-        std::cout << "Pass in a scenario (1-1) to execute." << std::endl;
+        std::cout << "Pass in a scenario (1-3) to execute." << std::endl;
         return 0;
     }
 

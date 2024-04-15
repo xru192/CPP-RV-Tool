@@ -8,9 +8,10 @@ Spec1(Car c) {
 
     event drive after(Car c): {}
 
-    ere : createCar (~driverEnter)* drive
+    // TODO fix the ERE
+    ere : createCar (~ driverEnter)* drive
 
-        @fail {
+        @match {
 		    std::cout << "Spec violated" << std::endl;
         }
 }

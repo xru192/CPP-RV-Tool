@@ -3,19 +3,27 @@
 
 #include <iostream>
 #include "monitor.h"
+#include "dispatcher.cpp"
 
 namespace monitor {
-    Spec1_Monitor monitor {};
+    Dispatcher dispatcher;
 }
 
 aspect Weave {
 
-    advice execution("void ...::drive()") : after() {
-        std::cout << "Car driven" << std::endl;
+    advice construction ("Car") : after() {
+        std::cout << "Car created" << std::endl;
+        monitor::dispatcher.receive_createCar(*tjp->target());
     }
 
-    advice execution("void Person::enterCarAsDriver(...)") : after() {
+    advice execution("void Car::drive()") : after() {
+        std::cout << "Car driven" << std::endl;
+        monitor::dispatcher.receive_drive(*tjp->target());
+    }
+
+    advice execution("void Person::enterCarAsDriver(...)") && args(car): after(Car& car) {
         std::cout << "Person entered as driver" << std::endl;
+        monitor::dispatcher.receive_driverEnter(car);
     }
 
 };

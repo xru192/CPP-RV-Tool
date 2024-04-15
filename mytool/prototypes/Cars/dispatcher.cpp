@@ -1,17 +1,7 @@
-#include "monitor.h"
-
-class Dispatcher
-{
-private:
-    Spec1_Monitor monitor {};
-
-public:
-    void receive_createCar(Car& c);
-    void receive_driverEnter(Car& c);
-    void receive_drive(Car& c);
-};
+#include "dispatcher.h"
 
 void Dispatcher::receive_createCar(Car& c) {
+    monitor.__RVC_Spec1_reset();
     monitor.__RVC_Spec1_createCar(c);
 }
 
