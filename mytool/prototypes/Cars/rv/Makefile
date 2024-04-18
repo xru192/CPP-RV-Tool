@@ -3,8 +3,11 @@ CXXFLAGS = -std=c++11
 
 REWRITER = ../../../lib/monitor_rewriter.py
 
-SRCS = ../src/main.cpp dispatcher.cpp Spec1_monitor.cpp
-HDRS = ../src/Car.h Spec1_monitor.h dispatcher.h
+# Name of the .mop file to use
+SPECNAME = Spec1
+
+SRCS = ../src/main.cpp dispatcher.cpp $(SPECNAME)_monitor.cpp
+HDRS = ../src/Car.h $(SPECNAME)_monitor.h dispatcher.h
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -12,25 +15,27 @@ TARGET = main
 
 
 monitor:
-	@../../../bin/rv-monitor -c Spec1.mop
-	@python3 $(REWRITER) __RVC_Spec1_Monitor.h
-	@python3 $(REWRITER) __RVC_Spec1_Monitor.cc
+	@../../../bin/rv-monitor -c $(SPECNAME).mop
+	@python3 $(REWRITER) __RVC_$(SPECNAME)_Monitor.h
+	@python3 $(REWRITER) __RVC_$(SPECNAME)_Monitor.cc
 	@rm __RVC*
+	@echo Monitors for $(SPECNAME) rewritten for my tool
 
 
 compile: $(OBJS)
 
 
 %.o: %.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 
-instrument: monitor
+instrument: 
+	@$(MAKE) monitor
 	@$(MAKE) compile --no-print-directory
-	@../../../bin/ag++ ../src/main.cpp dispatcher.o Spec1_monitor.o -p . -p "../src" -o $(TARGET)-instrumented
+	@../../../bin/ag++ ../src/main.cpp dispatcher.o $(SPECNAME)_monitor.o -p . -p "../src" -o $(TARGET)-instrumented
 
 	
 clean:
 	@rm -f $(TARGET) $(OBJS) $(TARGET)-instrumented
-	@rm -f Spec1_monitor.cpp
-	@rm -f Spec1_monitor.h
+	@rm -f $(SPECNAME)_monitor.cpp
+	@rm -f $(SPECNAME)_monitor.h
