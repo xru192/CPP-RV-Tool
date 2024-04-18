@@ -6,8 +6,8 @@ REWRITER = ../../../lib/monitor_rewriter.py
 # Name of the .mop file to use
 SPECNAME = Spec1
 
-SRCS = ../src/main.cpp dispatcher.cpp $(SPECNAME)_monitor.cpp
-HDRS = ../src/Car.h $(SPECNAME)_monitor.h dispatcher.h
+SRCS = ../src/main.cpp $(SPECNAME)_dispatcher.cpp $(SPECNAME)_monitor.cpp
+HDRS = ../src/Car.h $(SPECNAME)_monitor.h $(SPECNAME)_dispatcher.h
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -32,7 +32,7 @@ compile: $(OBJS)
 instrument: 
 	@$(MAKE) monitor
 	@$(MAKE) compile --no-print-directory
-	@../../../bin/ag++ ../src/main.cpp dispatcher.o $(SPECNAME)_monitor.o -p . -p "../src" -a $(SPECNAME).ah -o $(TARGET)-instrumented-$(SPECNAME)
+	@../../../bin/ag++ ../src/main.cpp $(SPECNAME)_dispatcher.o $(SPECNAME)_monitor.o -p . -p "../src" -a $(SPECNAME).ah -o $(TARGET)-instrumented-$(SPECNAME)
 
 	
 clean:
