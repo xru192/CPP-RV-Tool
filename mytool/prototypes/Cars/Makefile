@@ -1,5 +1,5 @@
 normal:
-	@$(MAKE) -C src compile
+	@$(MAKE) -C src compile --no-print-directory
 	@if [ $$? -eq 0 ]; then \
         echo "Success: generated executable src/main"; \
     fi

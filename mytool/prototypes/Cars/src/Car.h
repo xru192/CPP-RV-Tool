@@ -1,9 +1,24 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+
 class Car
 {
-    public:
-    void drive() {}
+public:
+    const std::string id;
 
-    void park() {}
+    Car(std::string id) : id(id) {
+        std::cout << "Car (" << id << ") created" << std::endl;
+    }
+
+    void drive() {
+        std::cout << id << ": driving" << std::endl;
+    }
+
+    void park() {
+        std::cout << id << ": parking" << std::endl;
+    }
+
+
 };

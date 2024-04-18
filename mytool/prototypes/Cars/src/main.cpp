@@ -5,27 +5,27 @@
 void scenario1()
 {
     std::cout << "Scenario 1 (Non-violating): " << std::endl;
-    Car car{};
-    Person person{};
+    Car car{"BMW"};
+    Person person{"Bob"};
     person.enterCarAsDriver(car);
-    car.drive(); 
+    car.drive();
 }
 
 void scenario2()
 {
     std::cout << "Scenario 2 (Violating): " << std::endl;
-    Car car{};
-    car.drive(); 
+    Car car{"Toyota"};
+    car.drive();
 }
 
 void scenario3()
 {
     std::cout << "Scenario 3 (Violating - needs parameterization to detect): " << std::endl;
-    Car car1{};
-    Car car2{};
-    Person person{};
+    Car car1{"Ford"};
+    Car car2{"Tesla"};
+    Person person{"Joe"};
     person.enterCarAsDriver(car1);
-    car1.drive(); 
+    car1.drive();
     car2.drive();
 }
 
@@ -54,4 +54,3 @@ int main(int argc, char **argv)
     }
     return 0;
 }
-

@@ -14,11 +14,11 @@ TARGET = main
 compile: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET)
+	@$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET)
 
 # Rule to compile source files into object files
 %.o: %.cpp $(HDRS)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	@rm -f $(TARGET) $(OBJS)
