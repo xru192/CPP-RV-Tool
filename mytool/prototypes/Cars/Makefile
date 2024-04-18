@@ -8,7 +8,7 @@ normal:
 withrv:
 	@$(MAKE) -C rv instrument --no-print-directory
 	@if [ $$? -eq 0 ]; then \
-        echo "Success: generated executable rv/main-instrumented"; \
+        echo "Success: generated executable rv/main-instrumented-[SPECNAME]"; \
     fi
 
 
