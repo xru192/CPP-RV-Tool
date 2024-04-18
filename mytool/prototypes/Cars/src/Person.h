@@ -8,6 +8,7 @@ class Person
 {
 public:
     const std::string id;
+    Car* myCar = nullptr; // Car this person is in 
 
     Person(std::string name) : id(name) {}
 
@@ -26,13 +27,16 @@ public:
     void enterCarAsDriver(Car &c)
     {
         std::cout << id << ": entering Car (" << c.id << ") as driver" << std::endl;
+        myCar = &c;
     }
 
     void enterCarAsPassenger(Car &c) {
         std::cout << id << ": entering Car (" << c.id << ") as passenger" << std::endl;
+        myCar = &c;
     }
 
     void exitCar() {
         std::cout << id << ": exiting Car" << std::endl;
+        myCar = nullptr;
     }
 };

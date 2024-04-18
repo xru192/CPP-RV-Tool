@@ -26,6 +26,11 @@ aspect Weave {
         monitor::dispatcher.receive_driverEnter(car);
     }
 
+    advice execution("void Person::exitCar(...)") : after() {
+        std::cout << "Instrumentation: Person exited Car" << std::endl;
+        monitor::dispatcher.receive_driverExit(*tjp->target()->myCar);
+    }
+
 };
 
 #endif

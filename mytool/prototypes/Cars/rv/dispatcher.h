@@ -11,5 +11,6 @@ private:
 public:
     void receive_createCar(Car& c);
     void receive_driverEnter(Car& c);
+    void receive_driverExit(Car& c);
     void receive_drive(Car& c);
 };

@@ -8,6 +8,8 @@ void scenario1()
     Car car{"BMW"};
     Person person{"Bob"};
     person.enterCarAsDriver(car);
+    person.exitCar();
+    person.enterCarAsDriver(car);
     car.drive();
 }
 
