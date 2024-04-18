@@ -1,5 +1,4 @@
-#ifndef __ASPECT_AH__
-#define __ASPECT_AH__
+#pragma once
 
 #include <iostream>
 #include "dispatcher.h"
@@ -32,5 +31,3 @@ aspect Weave {
     }
 
 };
-
-#endif
