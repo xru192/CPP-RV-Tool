@@ -61,6 +61,8 @@ def rewrite_cc(input_lines, file_out, spec_name):
             continue
         
         if line.startswith(f"__RVC_{spec_name}_"):
+            if "void& v" in line:
+                line = line.replace("void& v", "")
             class_name = get_monitor_class_name(spec_name)
             file_out.write(f"{class_name}::{line}")
         else:
@@ -87,6 +89,8 @@ def rewrite_h(input_lines, file_out, spec_name):
         if line[:4] == 'void':
             file_out.write("void\n")
         if line[:6] == "__RVC_":
+            if "void& v" in line:
+                line = line.replace("void& v", "")
             file_out.write(line)
         if line[0] == "}":
             file_out.write("};\n")
