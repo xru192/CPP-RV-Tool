@@ -1,6 +1,0 @@
-[console_scripts]
-wac = wac.wac:main
-wacc = wac.aspect.wacc:main
-wacxx = wac.aspect.wacxx:main
-war = wac.aspect.wacar:main
-
