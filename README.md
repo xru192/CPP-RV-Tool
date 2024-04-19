@@ -32,6 +32,15 @@ The executable supports 3 scenarios:
 
 Run on Cornell's ugclinux machines.
 
+### Setup
+
+Prior to running, you may need to grant execution permission for the binaries.
+
+```bash
+cd mytool/bin
+chmod u+x *
+```
+
 ### Running the Locks example
 
 ```bash
