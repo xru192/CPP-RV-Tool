@@ -13,6 +13,6 @@ Spec1(Lock l) {
     ere : (begin (acquire+ release+ | release*)* end)*
 
         @fail {
-		    std::cout << "!!! -- Spec violated -- !!!" << std::endl;
+		    std::cout << "Monitor: !!! -- Spec violated -- !!!" << std::endl;
         }
 }
