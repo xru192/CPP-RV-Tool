@@ -1,0 +1,36 @@
+#pragma once
+
+#include <iostream>
+#include "Spec1_dispatcher.h"
+#include "../src/Lock.h"
+#include "../src/LockUser.h"
+
+namespace monitor {
+    Dispatcher dispatcher;
+}
+
+aspect Weave {
+
+    advice execution("void LockUser::%(...)") : before() {
+        std::cout << "Instrumentation: begin<>" << std::endl;
+        monitor::dispatcher.receive_begin();
+    }
+
+    advice execution("void LockUser::%(...)") : after() {
+        std::cout << "Instrumentation: end<>" << std::endl;
+        monitor::dispatcher.receive_end();
+    }
+
+    advice execution("void Lock::acquire(...)") : after() {
+        Lock& l = *tjp->target();
+        std::cout << "Instrumentation: acquire<" << l.id << ">" << std::endl;
+        monitor::dispatcher.receive_acquire(l);
+    }
+
+    advice execution("void Lock::release(...)") : after() {
+        Lock& l = *tjp->target();
+        std::cout << "Instrumentation: release<" << l.id << ">" << std::endl;
+        monitor::dispatcher.receive_release(l);
+    }
+
+};

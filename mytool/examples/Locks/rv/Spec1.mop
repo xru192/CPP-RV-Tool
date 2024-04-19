@@ -1,0 +1,18 @@
+#include <iostream>
+#include "../src/Lock.h"
+
+Spec1(Lock l) {
+    event begin after(void v): {}
+
+    event end after(void v): {}
+
+    event acquire after(Lock& l): {}
+
+    event release after(Lock& l): {}
+
+    ere : (begin (acquire+ release+ | release*)* end)*
+
+        @fail {
+		    std::cout << "Monitor: !!! -- Spec violated -- !!!" << std::endl;
+        }
+}

@@ -1,0 +1,33 @@
+#pragma once
+
+#include <iostream>
+#include "Spec1_dispatcher.h"
+#include "../src/Car.h"
+
+namespace monitor {
+    Dispatcher dispatcher;
+}
+
+aspect Weave {
+
+    advice construction ("Car") : after() {
+        std::cout << "Instrumentation: Car created" << std::endl;
+        monitor::dispatcher.receive_createCar(*tjp->target());
+    }
+
+    advice execution("void Car::drive()") : after() {
+        std::cout << "Instrumentation: Car driven" << std::endl;
+        monitor::dispatcher.receive_drive(*tjp->target());
+    }
+
+    advice execution("void Person::enterCarAsDriver(...)") && args(car): after(Car& car) {
+        std::cout << "Instrumentation: Person entered as driver" << std::endl;
+        monitor::dispatcher.receive_driverEnter(car);
+    }
+
+    advice execution("void Person::exitCar(...)") : after() {
+        std::cout << "Instrumentation: Person exited Car" << std::endl;
+        monitor::dispatcher.receive_driverExit(*tjp->target()->myCar);
+    }
+
+};

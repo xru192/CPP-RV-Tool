@@ -1,0 +1,18 @@
+#include <iostream>
+#include "../src/Car.h"
+
+Spec1(Car c) {
+    event createCar after(Car c): {}
+
+    event driverEnter after(Car c): {}
+
+    event driverExit after(Car c): {}
+
+    event drive after(Car c): {}
+
+    ere : createCar (driverEnter | driverExit)* (driverEnter) drive*
+
+        @fail {
+		    std::cout << "Monitor: !!! -- Spec violated -- !!!" << std::endl;
+        }
+}
