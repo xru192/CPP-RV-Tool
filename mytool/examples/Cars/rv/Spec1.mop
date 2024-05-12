@@ -2,17 +2,17 @@
 #include "../src/Car.h"
 
 Spec1(Car c) {
-    event createCar after(Car c): {}
+    event createCar after(Car& c): {}
 
-    event driverEnter after(Car c): {}
+    event driverEnter after(Car& c): {}
 
-    event driverExit after(Car c): {}
+    event driverExit after(Car& c): {}
 
-    event drive after(Car c): {}
+    event drive after(Car& c): {}
 
-    ere : createCar (driverEnter | driverExit)* (driverEnter) drive*
+    ere : createCar (epsilon | ((driverEnter | driverExit)* driverExit)) drive
 
-        @fail {
+        @match {
 		    std::cout << "Monitor: !!! -- Spec violated -- !!!" << std::endl;
         }
 }

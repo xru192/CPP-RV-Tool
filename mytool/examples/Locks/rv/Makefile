@@ -27,6 +27,7 @@ dispatcher:
 	@python3 $(DISPATCHER_GENERATOR) $(SPECNAME).mop
 	@echo Dispatcher \(non-parametric\) for $(SPECNAME) generated
 
+
 compile: $(OBJS)
 
 
@@ -43,7 +44,7 @@ instrument:
 	
 clean:
 	@rm -f $(TARGET) $(OBJS) $(TARGET)-instrumented-*
-	@rm -f $(SPECNAME)_dispatcher.cpp
-	@rm -f $(SPECNAME)_dispatcher.h
 	@rm -f $(SPECNAME)_monitor.cpp
 	@rm -f $(SPECNAME)_monitor.h
+	@rm -f $(SPECNAME)_dispatcher.cpp
+	@rm -f $(SPECNAME)_dispatcher.h

@@ -67,6 +67,9 @@ def rewrite_cc(input_lines, file_out, spec_name):
             line = re.sub(r'\(.*\)', '()', line)
             class_name = get_monitor_class_name(spec_name)
             file_out.write(f"{class_name}::{line}")
+        elif line.startswith("{}"):
+            file_out.write('if (__RVC_state == -1) { return; }\n')
+            pass
         else:
             file_out.write(line)
 
