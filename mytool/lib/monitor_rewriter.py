@@ -3,6 +3,7 @@
 # This script converts these to classes which can support multiple instances.
 
 import sys
+import re
 from pathlib import Path
 
 
@@ -61,8 +62,9 @@ def rewrite_cc(input_lines, file_out, spec_name):
             continue
         
         if line.startswith(f"__RVC_{spec_name}_"):
-            if "void& v" in line:
-                line = line.replace("void& v", "")
+            # if "void& v" in line: 
+                # line = line.replace("void& v", "")
+            line = re.sub(r'\(.*\)', '()', line)
             class_name = get_monitor_class_name(spec_name)
             file_out.write(f"{class_name}::{line}")
         else:
@@ -91,6 +93,7 @@ def rewrite_h(input_lines, file_out, spec_name):
         if line[:6] == "__RVC_":
             if "void& v" in line:
                 line = line.replace("void& v", "")
+            line = re.sub(r'\([^()]*\)', '()', line)
             file_out.write(line)
         if line[0] == "}":
             file_out.write("};\n")

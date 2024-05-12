@@ -15,10 +15,10 @@ void Dispatcher::receive_end()
 
 void Dispatcher::receive_acquire(Lock &l)
 {
-    monitor.__RVC_Spec1_acquire(l);
+    monitor.__RVC_Spec1_acquire();
 }
 
 void Dispatcher::receive_release(Lock &l)
 {
-    monitor.__RVC_Spec1_release(l);
+    monitor.__RVC_Spec1_release();
 }
