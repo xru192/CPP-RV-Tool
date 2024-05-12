@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -std=c++11 -Wall -Wextra
 
 SRCS = main.cpp
-HDRS = Car.h Person.h
+HDRS = Car.h Person.h OneLaneBridge.h
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)

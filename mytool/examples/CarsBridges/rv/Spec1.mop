@@ -1,0 +1,24 @@
+#include <iostream>
+#include "../src/Car.h"
+#include "../src/Person.h"
+#include "../src/OneLaneBridge.h"
+
+Spec1(Car c, Person p, OneLaneBridge b) {
+    event enterCar after(Car c, Person p): {}
+
+    event takeBridge(Car c, Person p, OneLaneBridge b): {}
+
+    event createCar after(Car c): {}
+
+    event driverEnter after(Car c): {}
+
+    event driverExit after(Car c): {}
+
+    event drive after(Car c): {}
+
+    ere : after takeBridge createCar
+
+        @fail {
+		    std::cout << "Monitor: !!! -- Spec violated -- !!!" << std::endl;
+        }
+}
