@@ -12,7 +12,7 @@ Spec1(Car c, Person p, OneLaneBridge b) {
 
     event exitCar(Car c, Person p): {}
 
-    ere : enterCar takeBridge exitBridge takeBridge
+    ere : (enterCar | exitCar)* enterCar takeBridge exitBridge (((enterCar | exitCar)* enterCar) | epsilon) takeBridge
 
         @match {
 		    std::cout << "Monitor: !!! -- Spec violated -- !!!" << std::endl;

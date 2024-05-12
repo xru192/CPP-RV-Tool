@@ -52,6 +52,30 @@ private:
     Theta_t Theta {};
     std::unordered_map<theta_t, Spec1_Monitor*, tuple_hash> Delta {};
 
+    void print_delta() {
+        for (const auto& pair : Delta) {
+            auto f = pair.first;
+            if (std::get<0>(f) != nullptr) {
+                std::cout << "Car: " << std::get<0>(f)->id << "; ";
+            } else {
+                std::cout << "Car: null; ";
+            }
+            if (std::get<1>(f) != nullptr) {
+                std::cout << "Person: " << std::get<1>(f)->id << "; ";
+            } else {
+                std::cout << "Person: null; ";
+            }
+            if (std::get<2>(f) != nullptr) {
+                std::cout << "Bridge: " << std::get<2>(f)->id << "; ";
+            } else {
+                std::cout << "Bridge: null; ";
+            }
+            std::cout << "State: " << pair.second->__RVC_state;
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
+    }
+
     bool compatible(const theta_t& theta1, const theta_t& theta2) {
         auto* v0_1 = std::get<0>(theta1);
         auto* v1_1 = std::get<1>(theta1);
@@ -96,7 +120,7 @@ private:
     */
     Theta_t computeCombine(const theta_t& theta) {
         Theta_t all_combine {};
-        for (theta_t theta_prime : Theta) {
+        for (const theta_t& theta_prime : Theta) {
             if (compatible(theta, theta_prime)) {
                 theta_t combine = computeCombine(theta, theta_prime);
                 all_combine.insert(combine);
@@ -110,7 +134,7 @@ private:
     */
     void updateTheta(const theta_t& theta) {
         Theta_t combine_theta = computeCombine(theta);
-        for (theta_t theta_prime : combine_theta) {
+        for (const theta_t& theta_prime : combine_theta) {
             Theta.insert(theta_prime);
         }
     };
@@ -120,7 +144,7 @@ private:
     */
     Theta_t computeSet(const theta_t& theta) {
         Theta_t set {};
-        for (theta_t theta_prime : Theta) {
+        for (const theta_t& theta_prime : Theta) {
             if (less_informative(theta_prime, theta)) {
                 set.insert(theta_prime);
             }
@@ -128,7 +152,7 @@ private:
         return set;
     };
 
-    theta_t max(Theta_t& Theta) {
+    theta_t max(const Theta_t& Theta) {
         theta_t curr_max = {nullptr, nullptr, nullptr};
         for (const theta_t& theta : Theta) {
             if (less_informative(curr_max, theta)) {
@@ -161,12 +185,12 @@ private:
         return true;
     };
 
-    void receive(int event_id, theta_t theta) {
+    void receive(int event_id, theta_t& theta) {
         Theta_t domain = computeCombine(theta);
-        for (theta_t theta_prime : domain) {
+        for (const theta_t& theta_prime : domain) {
             if (Theta.count(theta_prime) > 0) {
                 // if theta' is in Theta, max (theta']_Theta = theta' and monitor already is created
-                Spec1_Monitor m = *Delta[theta_prime];
+                Spec1_Monitor& m = *Delta[theta_prime];
                 monitor_receive(m, event_id);
             } else {
                 Theta_t set = computeSet(theta_prime);
@@ -178,6 +202,10 @@ private:
             }
         }
         updateTheta(theta);
+        // std::cout << "SIZE: " << Theta.size() << std::endl;
+        // std::cout << "MONITORS: " << monitors.size() << std::endl;
+        // std::cout << "DELTA" << std::endl;
+        // print_delta();
     };
 
     void monitor_receive(Spec1_Monitor& monitor, int event_id) {
@@ -193,6 +221,7 @@ private:
                 break;
             case 3:
                 monitor.__RVC_Spec1_exitCar();
+                break;
         }
     }
 

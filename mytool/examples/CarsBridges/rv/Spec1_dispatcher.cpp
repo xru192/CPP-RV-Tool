@@ -1,7 +1,5 @@
 #include "Spec1_dispatcher.h"
 
-// This version of the dispatcher is only correct for non-parametric properties.
-
 void Dispatcher::receive_takeBridge(Car& c, OneLaneBridge& b) {
     theta_t theta = {&c, nullptr, &b};
     receive(0, theta);

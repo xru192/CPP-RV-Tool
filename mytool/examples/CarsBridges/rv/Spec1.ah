@@ -36,10 +36,10 @@ aspect Weave {
         monitor::dispatcher.receive_enterCar(car, *tjp->target());
     }
 
-    advice execution("void Person::exitCar(...)") : after() {
+    advice execution("void Person::exitCar(...)") : before() {
         Person& person = *tjp->target();
         Car& car = *tjp->target()->myCar;
-        std::cout << "Instrumentation: exitCar<" << car.id << ", " << person.id << ">" << std::endl;
+        std::cout << "Instrumentation (before): exitCar<" << car.id << ", " << person.id << ">" << std::endl;
         monitor::dispatcher.receive_exitCar(*tjp->target()->myCar, *tjp->target());
     }
 

@@ -36,16 +36,25 @@ void scenario2()
 void scenario3()
 {
     std::cout << "Scenario 3 (Violating - needs parameterization to detect): " << std::endl;
-    // using mapping = std::tuple<Car*, Person*, OneLaneBridge*>;
-    // std::unordered_map<mapping, int, tuple_hash> Delta {};
-    // Car car {""};
-    // Person person {""};
-    // OneLaneBridge bridge {""};
-    // auto tuple = std::make_tuple(&car, &person, &bridge);
-    // Delta[tuple] = 1;
-    // auto tuple2 = std::make_tuple(nullptr, nullptr, nullptr);
-    // Delta[tuple2] = 3;
-    // std::cout << "Value: " << Delta[tuple] << Delta[tuple2] << std::endl;
+    OneLaneBridge bridge {"Bridge 1"};
+    OneLaneBridge bridge2 {"Bridge 2"};
+    Car car1 {"BMW"};
+    Car car2 {"Toyota"};
+    Person person1 {"Alice"};
+    Person person2 {"Bob"};
+
+    person1.enterCarAsDriver(car1);
+    car1.enterBridgeEast(bridge);
+    car1.exitBridge(bridge);
+
+    person2.enterCarAsDriver(car2);
+    car2.enterBridgeEast(bridge2);
+    car2.exitBridge(bridge2);
+
+    person1.exitCar();
+    car2.enterBridgeEast(bridge2);
+
+
 }
 
 int main(int argc, char **argv)
