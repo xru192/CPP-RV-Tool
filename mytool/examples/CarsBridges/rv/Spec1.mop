@@ -4,19 +4,11 @@
 #include "../src/OneLaneBridge.h"
 
 Spec1(Car c, Person p, OneLaneBridge b) {
-    event enterCar after(Car c, Person p): {}
-
     event takeBridge(Car c, Person p, OneLaneBridge b): {}
 
-    event createCar after(Car c): {}
+    event exitBridge(Car c, Person p, OneLaneBridge b): {}
 
-    event driverEnter after(Car c): {}
-
-    event driverExit after(Car c): {}
-
-    event drive after(Car c): {}
-
-    ere : after takeBridge createCar
+    ere : takeBridge* exitBridge*
 
         @fail {
 		    std::cout << "Monitor: !!! -- Spec violated -- !!!" << std::endl;
