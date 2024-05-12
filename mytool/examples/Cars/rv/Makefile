@@ -41,9 +41,7 @@ instrument:
 	@$(MAKE) compile --no-print-directory
 	@../../../bin/ag++ ../src/main.cpp $(SPECNAME)_dispatcher.o $(SPECNAME)_monitor.o -p . -p "../src" -a $(SPECNAME).ah -o $(TARGET)-instrumented-$(SPECNAME)
 
-i:
-	../../../bin/ag++ ../src/main.cpp $(SPECNAME)_dispatcher.o $(SPECNAME)_monitor.o -p . -p "../src" -a $(SPECNAME).ah -o $(TARGET)-instrumented-$(SPECNAME)
-	
+
 clean:
 	@rm -f $(TARGET) $(OBJS) $(TARGET)-instrumented-*
 	@rm -f $(SPECNAME)_monitor.cpp
