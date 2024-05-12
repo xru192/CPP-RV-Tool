@@ -4,13 +4,18 @@
 #include "../src/OneLaneBridge.h"
 
 Spec1(Car c, Person p, OneLaneBridge b) {
-    event takeBridge(Car c, Person p, OneLaneBridge b): {}
+    event takeBridge(Car c, OneLaneBridge b): {}
 
-    event exitBridge(Car c, Person p, OneLaneBridge b): {}
+    event exitBridge(Car c, OneLaneBridge b): {}
 
-    ere : takeBridge* exitBridge*
+    event enterCar(Car c, Person p): {}
 
-        @fail {
+    event exitCar(Car c, Person p): {}
+
+    ere : enterCar takeBridge exitBridge takeBridge
+
+        @match {
 		    std::cout << "Monitor: !!! -- Spec violated -- !!!" << std::endl;
+            // ere : (enterCar | exitCar)* enterCar takeBridge exitBridge (exitCar* enterCar*)* takeBridge
         }
 }

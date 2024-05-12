@@ -7,7 +7,7 @@ REWRITER = ../../../lib/monitor_rewriter.py
 SPECNAME = Spec1
 
 SRCS = ../src/main.cpp $(SPECNAME)_dispatcher.cpp $(SPECNAME)_monitor.cpp
-HDRS = ../src/Car.h $(SPECNAME)_monitor.h $(SPECNAME)_dispatcher.h
+HDRS = ../src/Car.h ../src/Person.h ../src/OneLaneBridge.h $(SPECNAME)_monitor.h $(SPECNAME)_dispatcher.h
 
 OBJS = $(SRCS:.cpp=.o)
 
