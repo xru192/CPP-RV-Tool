@@ -21,15 +21,15 @@ public:
         std::cout << id << ": parking" << std::endl;
     }
 
-    void enterBridgeEast(OneLaneBridge bridge) {
+    void enterBridgeEast(OneLaneBridge& bridge) {
         std::cout << id << ": entering bridge " << bridge.id << " from East" << std::endl;
     }
 
-    void enterBridgeWest(OneLaneBridge bridge) {
+    void enterBridgeWest(OneLaneBridge& bridge) {
         std::cout << id << ": entering bridge " << bridge.id << " from West" << std::endl;
     }
 
-    void exitBridge(OneLaneBridge bridge) {
+    void exitBridge(OneLaneBridge& bridge) {
         // TODO: remove bridge param
         std::cout << id << ": exiting bridge " << bridge.id << std::endl;
     }
