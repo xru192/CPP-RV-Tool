@@ -77,6 +77,7 @@ class MOPFile :
 
 
 def generate_header(mop : MOPFile, file_out):
+    file_out.write('// This is a generated dispatcher for non-parametric monitoring\n\n')
     file_out.write('#pragma once\n\n')
     file_out.write(f'#include "{mop.specname}_monitor.h"\n')
     for include in mop.includes:
