@@ -28,6 +28,11 @@ dispatcher:
 	@echo Dispatcher \(non-parametric\) for $(SPECNAME) generated
 
 
+pdispatcher:
+	@python3 $(DISPATCHER_GENERATOR) $(SPECNAME).mop -p
+	@echo Dispatcher \(parametric\) for $(SPECNAME) generated
+
+
 compile: $(OBJS)
 
 
@@ -38,6 +43,13 @@ compile: $(OBJS)
 instrument: 
 	@$(MAKE) monitor
 	@$(MAKE) dispatcher
+	@$(MAKE) compile --no-print-directory
+	@../../../bin/ag++ ../src/main.cpp $(SPECNAME)_dispatcher.o $(SPECNAME)_monitor.o -p . -p "../src" -a $(SPECNAME).ah -o $(TARGET)-instrumented-$(SPECNAME)
+
+
+pinstrument:
+	@$(MAKE) monitor
+	@$(MAKE) pdispatcher
 	@$(MAKE) compile --no-print-directory
 	@../../../bin/ag++ ../src/main.cpp $(SPECNAME)_dispatcher.o $(SPECNAME)_monitor.o -p . -p "../src" -a $(SPECNAME).ah -o $(TARGET)-instrumented-$(SPECNAME)
 

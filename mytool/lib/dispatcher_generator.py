@@ -403,7 +403,6 @@ def main():
     do_parametric = args.parametric
 
     mop = MOPFile(filename)
-    print_mop(mop)
 
     if do_parametric:
         try:
