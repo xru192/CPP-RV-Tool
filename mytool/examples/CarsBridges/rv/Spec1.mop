@@ -4,13 +4,13 @@
 #include "../src/OneLaneBridge.h"
 
 Spec1(Car c, Person p, OneLaneBridge b) {
-    event takeBridge(Car c, OneLaneBridge b): {}
+    event takeBridge after(Car& c, OneLaneBridge& b): {}
 
-    event exitBridge(Car c, OneLaneBridge b): {}
+    event exitBridge after(Car& c, OneLaneBridge& b): {}
 
-    event enterCar(Car c, Person p): {}
+    event enterCar after (Car& c, Person& p): {}
 
-    event exitCar(Car c, Person p): {}
+    event exitCar after(Car& c, Person& p): {}
 
     ere : (enterCar | exitCar)* enterCar takeBridge exitBridge (((enterCar | exitCar)* enterCar) | epsilon) takeBridge
 

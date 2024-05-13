@@ -193,19 +193,19 @@ def get_tuple_hash_lines(mop : MOPFile):
         '\treturn seed;',
         '}',
         '',
-        f'std::size_t operator()(const {mop.theta_t_type}& tuple) const {{',
+        'std::size_t operator()(const theta_t& tuple) const {',
         '\treturn hash_combine<0>(tuple);',
         '}',
         '',
         'template <std::size_t N>',
-        f'std::size_t hash_combine(const {mop.theta_t_type}& tuple) const {{',
+        'std::size_t hash_combine(const theta_t& tuple) const {',
             '\tstd::size_t seed = 0;',
             '\tseed ^= hash_pointer(std::get<N>(tuple)) + 0x9e3779b9 + (seed << 6) + (seed >> 2);',
             '\treturn seed;',
         '}',
         '',
         'template <std::size_t N, std::size_t M, typename... Ts>',
-        f'std::size_t hash_combine(const {mop.theta_t_type}& tuple) const {{',
+        'std::size_t hash_combine(const theta_t& tuple) const {',
             '\tstd::size_t seed = hash_combine<N>(tuple);',
             '\tseed = hash_combine<M, Ts...>(tuple);',
             '\treturn seed;',
@@ -267,7 +267,7 @@ def get_computeCombine_lines(mop : MOPFile):
     ret_string = 'return {'
     for p_idx in range(mop.num_params):
         ret_string += f'v{p_idx}, '
-        ret_string = ret_string[:-2]
+    ret_string = ret_string[:-2]
     ret_string += '};'
     body.append(ret_string)
     

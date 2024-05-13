@@ -7,7 +7,7 @@
 #include "../src/OneLaneBridge.h"
 
 namespace monitor {
-    Dispatcher dispatcher {};
+    Spec1_dispatcher dispatcher {};
 }
 
 aspect Weave {

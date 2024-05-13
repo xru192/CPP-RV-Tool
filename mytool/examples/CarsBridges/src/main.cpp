@@ -48,13 +48,8 @@ void scenario3()
     car1.exitBridge(bridge);
 
     person2.enterCarAsDriver(car2);
-    car2.enterBridgeEast(bridge2);
-    car2.exitBridge(bridge2);
-
-    person1.exitCar();
-    car2.enterBridgeEast(bridge2);
-
-
+    person2.exitCar();
+    car1.enterBridgeEast(bridge);
 }
 
 int main(int argc, char **argv)
