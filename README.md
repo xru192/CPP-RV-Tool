@@ -9,7 +9,9 @@ This example is about `Lock` objects which can be acquired and released.
 
 Specification: If LockUser acquires a lock in a procedure, it must be released in the procedure.
 
-The ERE (good behavior) is (begin (acquire+ release+ | release*)* end)*
+The ERE (good behavior) is 
+
+`(begin (acquire+ release+ | release*)* end)*`
 
 The executable supports 3 scenarios:
 1. A non-violating trace
@@ -21,7 +23,23 @@ This example is about `Person`s who drive `Car`s.
 
 Specification: A Car can only drive if a Person has entered as a driver.
 
-The ERE (good behavior) is createCar (driverEnter | driverExit)* (driverEnter) drive*
+The ERE (bad behavior) is 
+
+`createCar (epsilon | ((driverEnter | driverExit)* driverExit)) drive`
+
+The executable supports 3 scenarios:
+1. A non-violating trace
+2. A violating trace which is detected by non-parametric monitoring
+3. A violating trace which requires parameterization to detect
+
+### CarsBridges
+This example extends the previous, with `Person`s who drive `Car`s on `OneLaneBridge`s.
+
+Specification: No person may drive on the same bridge in the same car twice.
+
+The ERE (bad behavior) is 
+
+`(enterCar | exitCar)* enterCar takeBridge exitBridge (((enterCar | exitCar)* enterCar) | epsilon) takeBridge`
 
 The executable supports 3 scenarios:
 1. A non-violating trace
@@ -53,13 +71,21 @@ make normal
 src/main SCENARIO
 ```
 
-To run the monitored version of the program:
+To run the version of the program with non-parametric monitoring:
 ```bash
 make withrv
 rv/main-instrumented-Spec1 SCENARIO
 ```
 
-You should see that a spec violation is detected for Scenario 2 but not 3, because currently only non-parametric monitoring is supported.
+You should see that a spec violation is detected for Scenario 2 but not 3, because non-parametric monitoring is used here.
+
+To run the version of the program with parametric monitoring:
+```bash
+make withprv
+rv/main-instrumented-Spec1 SCENARIO
+```
+
+You should see that a spec violation is detected for Scenario 2 and 3.
 
 ### Running the Cars example
 
@@ -75,11 +101,48 @@ make normal
 src/main SCENARIO
 ```
 
-To run the monitored version of the program:
+To run the version of the program with non-parametric monitoring:
 ```bash
 make withrv
 rv/main-instrumented-Spec1 SCENARIO
 ```
 
-You should see that a spec violation is detected for Scenario 2 but not 3, because currently only non-parametric monitoring is supported.
+You should see that a spec violation is detected for Scenario 2 but not 3, because non-parametric monitoring is used here.
 
+To run the version of the program with parametric monitoring:
+```bash
+make withprv
+rv/main-instrumented-Spec1 SCENARIO
+```
+
+You should see that a spec violation is detected for Scenario 2 and 3.
+
+### Running the Cars example
+
+```bash
+cd mytool/examples/Cars
+```
+
+The instructions are now the essentially the same as for Locks.
+
+To run the normal version of the program (replace SCENARIO with 1, 2, or 3):
+```bash
+make normal
+src/main SCENARIO
+```
+
+To run the version of the program with non-parametric monitoring:
+```bash
+make withrv
+rv/main-instrumented-Spec1 SCENARIO
+```
+
+You should see that a spec violation is detected for Scenario 2 but not 3, because non-parametric monitoring is used here.
+
+To run the version of the program with parametric monitoring:
+```bash
+make withprv
+rv/main-instrumented-Spec1 SCENARIO
+```
+
+You should see that a spec violation is detected for Scenario 2 and 3.
