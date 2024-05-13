@@ -134,11 +134,11 @@ std::size_t hash_pointer(const T* ptr) {
 }\n''')
     file_out.write('struct tuple_hash {\n')
     write_out(file_out, get_tuple_hash_lines(mop), '\t')
-    file_out.write('}\n')
+    file_out.write('};\n')
     file_out.write(f'class {mop.dispatcher_class_name}\n')
     file_out.write('{\n')
-    file_out.write(f'using theta_t = {mop.theta_t_type}\n')
-    file_out.write('using Theta_t = std::unordered_set<theta_t, tuple_hash>\n\n')
+    file_out.write(f'using theta_t = {mop.theta_t_type};\n')
+    file_out.write('using Theta_t = std::unordered_set<theta_t, tuple_hash>;\n\n')
     file_out.write('private:\n')
     write_out(file_out, get_private_lines(mop), '\t')
     file_out.write('public:\n')
@@ -185,7 +185,7 @@ def write_out(file_out, lines, prefix=""):
 
 def get_tuple_hash_lines(mop : MOPFile):
     lines = [
-        f'using theta_t = {mop.theta_t_type}',
+        f'using theta_t = {mop.theta_t_type};',
         'template <std::size_t N>',
         'std::size_t operator()(const theta_t& tuple) const {',
         '\tstd::size_t seed = 0;',
@@ -193,7 +193,7 @@ def get_tuple_hash_lines(mop : MOPFile):
         '\treturn seed;',
         '}',
         '',
-        'std::size_t operator()(const std::tuple<Car*, Person*, OneLaneBridge*>& tuple) const {',
+        f'std::size_t operator()(const {mop.theta_t_type}& tuple) const {{',
         '\treturn hash_combine<0>(tuple);',
         '}',
         '',
@@ -227,7 +227,6 @@ def get_private_lines(mop : MOPFile):
     lines.extend(get_computeSet_lines(mop))
     lines.extend(get_max_lines(mop))
     lines.extend(get_less_informative_lines(mop))
-    lines.extend(get_receive_lines(mop))
     lines.extend(get_receive_lines(mop))
     lines.extend(get_monitor_receive_lines(mop))
     
@@ -357,7 +356,7 @@ def get_monitor_receive_lines(mop : MOPFile):
     body = ['switch (event_id) {']
     for e_id in range(len(mop.events)):
         body.append(f'\tcase {e_id}:')
-        body.append(f'\t\tmonitor.__RVC_{mop.monitor_class_name}_{mop.events[e_id][0]}();')
+        body.append(f'\t\tmonitor.__RVC_{mop.specname}_{mop.events[e_id][0]}();')
         body.append('\t\tbreak;')
     body.append('}')
     return get_lines_for_method(header, body)

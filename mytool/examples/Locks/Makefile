@@ -12,6 +12,13 @@ withrv:
     fi
 
 
+withprv:
+	@$(MAKE) -C rv pinstrument --no-print-directory
+	@if [ $$? -eq 0 ]; then \
+        echo "Success: generated executable rv/main-instrumented-[SPECNAME]"; \
+    fi
+
+
 clean:
 	@$(MAKE) -C src clean --no-print-directory
 	@$(MAKE) -C rv clean --no-print-directory
