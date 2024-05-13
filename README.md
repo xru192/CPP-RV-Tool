@@ -21,7 +21,7 @@ The executable supports 3 scenarios:
 ### Cars
 This example is about `Person`s who drive `Car`s. 
 
-Specification: A Car can only drive if a Person has entered as a driver.
+Specification: A car can only drive if a person has entered as a driver.
 
 The ERE (bad behavior) is 
 
@@ -117,32 +117,10 @@ rv/main-instrumented-Spec1 SCENARIO
 
 You should see that a spec violation is detected for Scenario 2 and 3.
 
-### Running the Cars example
+### Running the CarsBridges example
 
 ```bash
-cd mytool/examples/Cars
+cd mytool/examples/CarsBridges
 ```
 
-The instructions are now the essentially the same as for Locks.
-
-To run the normal version of the program (replace SCENARIO with 1, 2, or 3):
-```bash
-make normal
-src/main SCENARIO
-```
-
-To run the version of the program with non-parametric monitoring:
-```bash
-make withrv
-rv/main-instrumented-Spec1 SCENARIO
-```
-
-You should see that a spec violation is detected for Scenario 2 but not 3, because non-parametric monitoring is used here.
-
-To run the version of the program with parametric monitoring:
-```bash
-make withprv
-rv/main-instrumented-Spec1 SCENARIO
-```
-
-You should see that a spec violation is detected for Scenario 2 and 3.
+Same as above.
