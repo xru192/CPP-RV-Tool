@@ -1,0 +1,21 @@
+#include <iostream>
+#include "../src/Car.h"
+#include "../src/Person.h"
+#include "../src/OneLaneBridge.h"
+
+Spec1(Car c, Person p, OneLaneBridge b) {
+    event takeBridge after(Car& c, OneLaneBridge& b): {}
+
+    event exitBridge after(Car& c, OneLaneBridge& b): {}
+
+    event enterCar after (Car& c, Person& p): {}
+
+    event exitCar after(Car& c, Person& p): {}
+
+    ere : (enterCar | exitCar)* enterCar takeBridge exitBridge (((enterCar | exitCar)* enterCar) | epsilon) takeBridge
+
+        @match {
+		    std::cout << "Monitor: !!! -- Spec violated -- !!!" << std::endl;
+            // ere : (enterCar | exitCar)* enterCar takeBridge exitBridge (exitCar* enterCar*)* takeBridge
+        }
+}

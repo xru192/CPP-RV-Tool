@@ -1,0 +1,47 @@
+#pragma once
+
+#include <iostream>
+#include "Spec1_dispatcher.h"
+#include "../src/Car.h"
+#include "../src/Person.h"
+#include "../src/OneLaneBridge.h"
+
+namespace monitor {
+    Spec1_dispatcher dispatcher {};
+}
+
+aspect Weave {
+
+    advice execution("void Car::enterBridgeEast(...)") && args(bridge): after(OneLaneBridge& bridge) {
+        Car& car = *tjp->target();
+        std::cout << "Instrumentation: takeBridge<" << car.id << ", " << bridge.id << "> " << std::endl;
+        monitor::dispatcher.receive_takeBridge(*tjp->target(), bridge);
+    }
+
+    advice execution("void Car::enterBridgeWest(...)") && args(bridge): after(OneLaneBridge& bridge) {
+        Car& car = *tjp->target();
+        std::cout << "Instrumentation: takeBridge<" << car.id << ", " << bridge.id << "> " << std::endl;
+        monitor::dispatcher.receive_takeBridge(*tjp->target(), bridge);
+    }
+
+    advice execution("void Car::exitBridge(...)") && args(bridge): after(OneLaneBridge& bridge) {
+        Car& car = *tjp->target();
+        std::cout << "Instrumentation: exitBridge<" << car.id << ", " << bridge.id << "> " << std::endl;
+        monitor::dispatcher.receive_exitBridge(*tjp->target(), bridge);
+    }
+
+    advice execution("void Person::enterCarAsDriver(...)") && args(car): after(Car& car) {
+        Person& person = *tjp->target();
+        std::cout << "Instrumentation: enterCar<" << car.id << ", " << person.id << ">" << std::endl;
+        monitor::dispatcher.receive_enterCar(car, *tjp->target());
+    }
+
+    advice execution("void Person::exitCar(...)") : before() {
+        Person& person = *tjp->target();
+        Car& car = *tjp->target()->myCar;
+        std::cout << "Instrumentation (before): exitCar<" << car.id << ", " << person.id << ">" << std::endl;
+        monitor::dispatcher.receive_exitCar(*tjp->target()->myCar, *tjp->target());
+    }
+
+
+};

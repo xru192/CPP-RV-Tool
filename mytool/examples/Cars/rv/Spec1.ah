@@ -5,7 +5,7 @@
 #include "../src/Car.h"
 
 namespace monitor {
-    Dispatcher dispatcher;
+    Spec1_dispatcher dispatcher;
 }
 
 aspect Weave {
